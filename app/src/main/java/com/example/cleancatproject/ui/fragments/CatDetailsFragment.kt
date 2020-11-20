@@ -57,7 +57,6 @@ class CatDetailsFragment : Fragment(R.layout.fragment_cat_detail) {
             mCatDetailsFragmentViewModel.onVoteForTheKittyClicked()
             mButton.isEnabled=false
             mButton.text="Спасибо за голос"
-            //проверка
         }
     }
 }
