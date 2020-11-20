@@ -46,9 +46,9 @@ class CatDataSource(private val apiService: ImagesApiService) : PageKeyedDataSou
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Cat>) {
         call = when (IMG_TYPE) {
-            TypeEnum.GIF -> apiService.getCatImageGif(FIRST_PAGE)
-            TypeEnum.JPG -> apiService.getCatImageJpg(FIRST_PAGE)
-            TypeEnum.PNG -> apiService.getCatImagePng(FIRST_PAGE)
+            TypeEnum.GIF -> apiService.getCatImageGif(params.key)
+            TypeEnum.JPG -> apiService.getCatImageJpg(params.key)
+            TypeEnum.PNG -> apiService.getCatImagePng(params.key)
         }
 
         call.enqueue(object : retrofit2.Callback<List<Cat>> {
@@ -76,9 +76,9 @@ class CatDataSource(private val apiService: ImagesApiService) : PageKeyedDataSou
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Cat>) {
         call = when (IMG_TYPE) {
-            TypeEnum.GIF -> apiService.getCatImageGif(FIRST_PAGE)
-            TypeEnum.JPG -> apiService.getCatImageJpg(FIRST_PAGE)
-            TypeEnum.PNG -> apiService.getCatImagePng(FIRST_PAGE)
+            TypeEnum.GIF -> apiService.getCatImageGif(params.key)
+            TypeEnum.JPG -> apiService.getCatImageJpg(params.key)
+            TypeEnum.PNG -> apiService.getCatImagePng(params.key)
         }
 
         call.enqueue(object : retrofit2.Callback<List<Cat>> {
