@@ -8,7 +8,6 @@ import javax.inject.Inject
 
 class FavoriteDataSourceFactory @Inject constructor(private val apiService: FavoriteApiService) :
     DataSource.Factory<Int, Favorite>() {
-
     val favoriteLiveDataSource = MutableLiveData<FavoriteDataSource>()
 
     override fun create(): androidx.paging.DataSource<Int, Favorite> {

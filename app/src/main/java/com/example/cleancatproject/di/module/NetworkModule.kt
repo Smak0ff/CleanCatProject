@@ -16,27 +16,25 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule {
-
     @Singleton
     @Provides
-    fun provideUploadApiService(retrofit: Retrofit): UploadApiService {
+    inline fun provideUploadApiService(retrofit: Retrofit): UploadApiService {
         return retrofit.create(UploadApiService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideImagesApiService(retrofit: Retrofit): ImagesApiService {
+    inline fun provideImagesApiService(retrofit: Retrofit): ImagesApiService {
         return retrofit.create(ImagesApiService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideFavoritesApiService(retrofit: Retrofit): FavoriteApiService {
+    inline fun provideFavoritesApiService(retrofit: Retrofit): FavoriteApiService {
         return retrofit.create(FavoriteApiService::class.java)
     }
 
     @Provides
-    @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -45,9 +43,7 @@ class NetworkModule {
             .build()
     }
 
-
     @Provides
-    @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -64,6 +60,4 @@ class NetworkModule {
             .addInterceptor(loggingInterceptor)
             .build()
     }
-
-
 }

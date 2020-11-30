@@ -21,11 +21,8 @@ class UploadFragmentViewModel @Inject constructor(
     dataSourceFactory: UploadDataSourceFactory,
     private val uploadApiService: UploadApiService
 ) : ViewModel() {
-
     private val liveDataUploadDataSource: LiveData<UploadDataSource>
-
     val uploadPagedListLiveData: LiveData<PagedList<Upload>>
-
 
     init {
         liveDataUploadDataSource = dataSourceFactory.uploadLiveDataSource
@@ -36,7 +33,6 @@ class UploadFragmentViewModel @Inject constructor(
         uploadPagedListLiveData = LivePagedListBuilder(dataSourceFactory, config)
             .build()
     }
-
 
     fun onUploadPhotoClicked(file: MultipartBody.Part) {
         val call = uploadApiService.postImage(file)
@@ -71,5 +67,4 @@ class UploadFragmentViewModel @Inject constructor(
             }
         })
     }
-
 }

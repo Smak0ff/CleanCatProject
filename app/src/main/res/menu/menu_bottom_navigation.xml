@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/navigationСatBtnId"
+    <item
+        android:id="@+id/navigationСatBtnId"
         android:icon="@drawable/navigation_cat_btn"
-        android:title="Cats"/>
-    <item android:id="@+id/navigationFavoriteBtnId"
+        android:title="Cats" />
+    <item
+        android:id="@+id/navigationFavoriteBtnId"
         android:icon="@drawable/navigation_favorite_btn"
-        android:title="Favorite"/>
-    <item android:id="@+id/navigationDownloadsBtnId"
+        android:title="Favorite" />
+    <item
+        android:id="@+id/navigationDownloadsBtnId"
         android:icon="@drawable/navigation_dowload_btn"
-        android:title="Upload"/>
+        android:title="Upload" />
 
 </menu>

@@ -14,18 +14,20 @@ class FavoriteDataSource(private val apiService: FavoriteApiService) :
         callback: LoadInitialCallback<Int, Favorite>
     ) {
         val call = apiService.getMyFavorites(FIRST_PAGE)
-
         call.enqueue(object : retrofit2.Callback<List<Favorite>> {
             override fun onResponse(
                 call: Call<List<Favorite>>,
                 response: Response<List<Favorite>>
             ) {
                 if (response.isSuccessful) {
-                    val apiResponse = response.body()!!
+                    val apiResponse = response.body()
                     apiResponse.let {
-                        callback.onResult(apiResponse, null, FIRST_PAGE + 1)
+                        if (apiResponse != null) {
+                            callback.onResult(apiResponse, null, FIRST_PAGE + 1)
+                        } else {
+                            println(response.errorBody())
+                        }
                     }
-
                 }
             }
 
@@ -35,22 +37,23 @@ class FavoriteDataSource(private val apiService: FavoriteApiService) :
         })
     }
 
-
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Favorite>) {
         val call = apiService.getMyFavorites(params.key)
-
         call.enqueue(object : retrofit2.Callback<List<Favorite>> {
             override fun onResponse(
                 call: Call<List<Favorite>>,
                 response: Response<List<Favorite>>
             ) {
                 if (response.isSuccessful) {
-                    val apiResponse = response.body()!!
+                    val apiResponse = response.body()
                     val key = params.key + 1
                     apiResponse.let {
-                        callback.onResult(apiResponse, key)
+                        if (apiResponse != null) {
+                            callback.onResult(apiResponse, key)
+                        } else {
+                            println(response.errorBody())
+                        }
                     }
-
                 }
             }
 
@@ -63,18 +66,20 @@ class FavoriteDataSource(private val apiService: FavoriteApiService) :
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Favorite>) {
         val call = apiService.getMyFavorites(params.key)
-
         call.enqueue(object : retrofit2.Callback<List<Favorite>> {
             override fun onResponse(
                 call: Call<List<Favorite>>,
                 response: Response<List<Favorite>>
             ) {
                 if (response.isSuccessful) {
-
-                    val apiResponse = response.body()!!
+                    val apiResponse = response.body()
                     val key = if (params.key > 1) params.key - 1 else 0
                     apiResponse.let {
-                        callback.onResult(apiResponse, key)
+                        if (apiResponse != null) {
+                            callback.onResult(apiResponse, key)
+                        } else {
+                            println(response.errorBody())
+                        }
                     }
                 }
             }

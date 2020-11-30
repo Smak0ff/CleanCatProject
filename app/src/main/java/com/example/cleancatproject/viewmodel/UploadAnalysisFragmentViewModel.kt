@@ -30,7 +30,6 @@ class UploadAnalysisFragmentViewModel @Inject constructor(private val uploadApiS
         })
     }
 
-
     class Factory(viewModel: UploadAnalysisFragmentViewModel) :
         ViewModelFactory<UploadAnalysisFragmentViewModel>(viewModel)
 }

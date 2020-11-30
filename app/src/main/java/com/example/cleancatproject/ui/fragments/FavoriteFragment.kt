@@ -24,11 +24,11 @@ import javax.inject.Inject
 
 class FavoriteFragment : Fragment(R.layout.fragment_favorite), FavoriteAdapter.Listener {
     @Inject
-    lateinit var vmFactory : ViewModelProvider.Factory
+    lateinit var vmFactory: ViewModelProvider.Factory
 
-    lateinit var mBinding: FragmentFavoriteBinding
-    lateinit var adapter: FavoriteAdapter
-    lateinit var mRecyclerView: RecyclerView
+    private lateinit var mBinding: FragmentFavoriteBinding
+    private lateinit var adapter: FavoriteAdapter
+    private lateinit var mRecyclerView: RecyclerView
     private val mFavoriteFragmentViewModel: FavoriteFragmentViewModel by viewModels { vmFactory }
 
     override fun onAttach(context: Context) {
@@ -36,12 +36,17 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), FavoriteAdapter.L
         AndroidSupportInjection.inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         mBinding = FragmentFavoriteBinding.inflate(layoutInflater)
         adapter = FavoriteAdapter(this)
         mRecyclerView = mBinding.recyclerViewFavorite
         mRecyclerView.adapter = adapter
-        mRecyclerView.layoutManager = GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false)
+        mRecyclerView.layoutManager =
+            GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false)
         return mBinding.root
     }
 

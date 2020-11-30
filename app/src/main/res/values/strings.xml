@@ -9,4 +9,10 @@
     <string name="analysis_text">Ход анализа картинки при выгрузке:</string>
     <string name="add_to_favorite_text">Добавить в избранное</string>
     <string name="delete_from_favorite_text">Удалить из избранного</string>
+    <string name="context_delete">Удалить</string>
+    <string name="choose_send_method">Выберите способ отправки фото:</string>
+    <string name="could_not_create_file">Не удаётся создать файл!</string>
+    <string name="added">Добавлено</string>
+    <string name="thanks_for_vote">Спасибо за голос</string>
+    <string name="no_answer">Нет ответа от сервера</string>
 </resources>

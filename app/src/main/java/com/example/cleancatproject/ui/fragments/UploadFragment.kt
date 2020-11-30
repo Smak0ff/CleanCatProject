@@ -1,10 +1,10 @@
 package com.example.cleancatproject.ui.fragments
 
-
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -40,16 +40,15 @@ import javax.inject.Inject
 class UploadFragment : Fragment(R.layout.fragment_upload), UploadAdapter.Listener {
     @Inject
     lateinit var vmFactory: ViewModelProvider.Factory
-    lateinit var mBinding: FragmentUploadBinding
-    lateinit var mButton: FloatingActionButton
-    lateinit var mRecyclerView: RecyclerView
-    lateinit var adapter: UploadAdapter
-    lateinit var file: File
-    lateinit var requestBody: RequestBody
-    lateinit var multipart: MultipartBody.Part
-    lateinit var uriFile: Uri
-    lateinit var currentPhotoPath: String
-    val REQUEST_IMAGE_CAPTURE = 1
+    private lateinit var mBinding: FragmentUploadBinding
+    private lateinit var mButton: FloatingActionButton
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var adapter: UploadAdapter
+    private lateinit var file: File
+    private lateinit var requestBody: RequestBody
+    private lateinit var multipart: MultipartBody.Part
+    private lateinit var currentPhotoPath: String
+    private val REQUEST_IMAGE_CAPTURE = 1
     private val mUploadFragmentViewModel: UploadFragmentViewModel by viewModels { vmFactory }
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -61,7 +60,6 @@ class UploadFragment : Fragment(R.layout.fragment_upload), UploadAdapter.Listene
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         mBinding = FragmentUploadBinding.inflate(layoutInflater)
         adapter = UploadAdapter(this)
         mButton = mBinding.uploadPhotoId
@@ -72,38 +70,29 @@ class UploadFragment : Fragment(R.layout.fragment_upload), UploadAdapter.Listene
         return mBinding.root
     }
 
-
     override fun onStart() {
         super.onStart()
         mUploadFragmentViewModel.uploadPagedListLiveData.observe(this, androidx.lifecycle.Observer {
             adapter.submitList(it)
         })
-        
         mButton.setOnClickListener {
             try {
                 file = createImageFile()
-                uriFile = FileProvider.getUriForFile(
+                var uriFile = FileProvider.getUriForFile(
                     requireContext(), "com.example.cleancatproject.fileprovider", file
                 )
-
-
                 val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriFile)
-
                 val pickIntent = Intent(
                     Intent.ACTION_GET_CONTENT
                 )
                 pickIntent.type = "image/*"
-
-
-                val chooser = Intent.createChooser(cameraIntent, "Выберите способ отправки фото:")
+                val chooser =
+                    Intent.createChooser(cameraIntent, getString(R.string.choose_send_method))
                 chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(pickIntent))
-
                 startActivityForResult(chooser, REQUEST_IMAGE_CAPTURE)
-
-
             } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Could not create file!", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), R.string.could_not_create_file, Toast.LENGTH_SHORT)
                     .show()
                 println(e.message)
             }
@@ -114,7 +103,6 @@ class UploadFragment : Fragment(R.layout.fragment_upload), UploadAdapter.Listene
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             if (data?.data != null) {
-
                 val selectedImage: Uri? = data.data
                 var bitmap = MediaStore.Images.Media.getBitmap(
                     requireContext().contentResolver,
@@ -126,8 +114,6 @@ class UploadFragment : Fragment(R.layout.fragment_upload), UploadAdapter.Listene
                 requestBody = RequestBody.create(MediaType.parse("image/jpeg"), byteArray)
                 multipart = MultipartBody.Part.createFormData("file", file.name, requestBody)
                 mUploadFragmentViewModel.onUploadPhotoClicked(multipart)
-
-
             } else {
                 var array = file.readBytes()
                 requestBody = RequestBody.create(MediaType.parse("image/jpeg"), array)
@@ -136,7 +122,6 @@ class UploadFragment : Fragment(R.layout.fragment_upload), UploadAdapter.Listene
             }
         }
     }
-
 
     @Throws(IOException::class)
     private fun createImageFile(): File {

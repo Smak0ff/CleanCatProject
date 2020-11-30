@@ -1,6 +1,5 @@
 package com.example.cleancatproject.network
 
-
 import com.example.cleancatproject.model.cat.ResponseMessage
 import com.example.cleancatproject.model.upload.Upload
 import com.example.cleancatproject.model.upload.analysis.Analysis
@@ -11,17 +10,21 @@ import retrofit2.http.*
 interface UploadApiService {
     @Multipart
     @POST("v1/images/upload")
-    fun postImage(@Part photo: MultipartBody.Part) : Call<ResponseMessage>
-
-    @GET("v1/images?limit=30&order=ASC&mime_types=jpg")
-    fun getMyCats(@Query("page") page : Int) : Call<List<Upload>>
+    fun postImage(@Part photo: MultipartBody.Part): Call<ResponseMessage>
 
     @GET("v1/images/{image_id}/analysis")
-    fun getAnalysisById(@Path("image_id") catId: String?) : Call<List<Analysis>>
+    fun getAnalysisById(@Path("image_id") catId: String?): Call<List<Analysis>>
 
     @DELETE("v1/images/{image_id}")
-    fun deleteFromUpload(@Path("image_id") catId: String) : Call<ResponseMessage>
+    fun deleteFromUpload(@Path("image_id") catId: String): Call<ResponseMessage>
 
+    @GET("v1/images")
+    fun getMyCats(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+        @Query("order") order: String,
+        @Query("mime_types") uploadPhotoType: String
+    ): Call<List<Upload>>
 }
 
 

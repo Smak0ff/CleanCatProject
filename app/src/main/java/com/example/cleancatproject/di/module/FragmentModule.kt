@@ -7,7 +7,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class FragmentModule {
-
     @FragmentScope
     @ContributesAndroidInjector(modules = [CatsFragmentModule::class])
     abstract fun bindCatsFragment(): CatsFragment

@@ -1,6 +1,5 @@
 package com.example.cleancatproject.ui.pagedList.favoriteAdapter
 
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import com.example.cleancatproject.model.favorite.Favorite
 class FavoriteAdapter(private val listener: Listener) :
     PagedListAdapter<Favorite, FavoriteAdapter.FavoriteViewHolder>(FAVORITE_COMPARATOR) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
-        var view =
+        val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_favorite, parent, false)
         return FavoriteViewHolder(listener, view)
     }
@@ -25,15 +24,13 @@ class FavoriteAdapter(private val listener: Listener) :
         if (favorite != null) {
             holder.bind(favorite)
         }
-
     }
 
     class FavoriteViewHolder(private val listener: Listener, view: View) :
         RecyclerView.ViewHolder(view) {
-        var mBinding = ItemFavoriteBinding.bind(view)
-        var mImageView = mBinding.imageForRecyclerFavoriteId
-        var mButton = mBinding.deleteFromFavoriteBtnId
-
+        private var mBinding = ItemFavoriteBinding.bind(view)
+        private var mImageView = mBinding.imageForRecyclerFavoriteId
+        private var mButton = mBinding.deleteFromFavoriteBtnId
         private var favorite: Favorite? = null
 
         init {
@@ -43,7 +40,6 @@ class FavoriteAdapter(private val listener: Listener) :
                     listener.onImageClicked(it)
                 }
             }
-
             mButton.setOnClickListener {
                 favorite?.let {
                     listener.onDeleteFromFavoriteClicked(it)
@@ -57,14 +53,12 @@ class FavoriteAdapter(private val listener: Listener) :
                 .load(favorite.image.url)
                 .into(mImageView)
         }
-
     }
 
     companion object {
         private val FAVORITE_COMPARATOR = object : DiffUtil.ItemCallback<Favorite>() {
             override fun areItemsTheSame(oldItem: Favorite, newItem: Favorite): Boolean =
                 oldItem.id == newItem.id
-
 
             override fun areContentsTheSame(oldItem: Favorite, newItem: Favorite): Boolean =
                 newItem == oldItem
@@ -73,13 +67,9 @@ class FavoriteAdapter(private val listener: Listener) :
 
     interface Listener {
         fun onImageClicked(favorite: Favorite) {
-
         }
 
         fun onDeleteFromFavoriteClicked(favorite: Favorite) {
-
         }
-
     }
-
 }

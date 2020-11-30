@@ -23,19 +23,16 @@ class CatsFragmentViewModel @Inject constructor(
     dataSourceFactory: CatDataSourceFactory,
     private val favoriteApiService: FavoriteApiService
 ) : ViewModel() {
-
     //Нам необходимо передать данные из CatDataSource, создадим для них хранилище LiveData
     private val liveDataCatDataSource: LiveData<CatDataSource>
 
     //Создаём LiveData для обновления PagedList
     val catPagedListLiveData: LiveData<PagedList<Cat>>
 
-
     //Блок инициализации срабатывает после создания экземпляра ViewModel
     init {
         //Создаём объект фабрики CatDataSource и передаём из него данные в хранилище, которое мы инициализируем
         liveDataCatDataSource = dataSourceFactory.catDataSourceLiveData
-
         //Создаём билдер для PagedList
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
@@ -50,7 +47,6 @@ class CatsFragmentViewModel @Inject constructor(
         var favoriteVote = FavoriteVote(cat.id)
         val call = favoriteApiService.postFavorite(favoriteVote)
         call.enqueue(object : retrofit2.Callback<ResponseMessage> {
-
             override fun onResponse(
                 call: Call<ResponseMessage>,
                 response: Response<ResponseMessage>

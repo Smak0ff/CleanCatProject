@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         mNavigationBar = mBinding.bottomNavigationViewId
         setContentView(mBinding.root)
         nextFragment(R.id.fragmentWindowId, CatsFragment())
-
         mNavigationBar.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navigationСatBtnId -> {

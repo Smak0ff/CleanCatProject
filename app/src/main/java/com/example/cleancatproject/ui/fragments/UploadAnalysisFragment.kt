@@ -20,8 +20,8 @@ class UploadAnalysisFragment : Fragment(R.layout.fragment_upload_analysis) {
     @Inject
     lateinit var vmFactory: ViewModelProvider.Factory
     private val mUploadAnalysisFragmentViewModel: UploadAnalysisFragmentViewModel by viewModels { vmFactory }
-    lateinit var mBinding: FragmentUploadAnalysisBinding
-    lateinit var mTextView: TextView
+    private lateinit var mBinding: FragmentUploadAnalysisBinding
+    private lateinit var mTextView: TextView
     override fun onAttach(context: Context) {
         super.onAttach(context)
         AndroidSupportInjection.inject(this)

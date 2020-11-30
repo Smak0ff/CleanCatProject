@@ -16,7 +16,6 @@ class CatDetailsFragmentViewModel @Inject constructor(private val imagesApiServi
     ViewModel() {
     var apiLiveData = MutableLiveData<Cat>()
 
-
     init {
         val call = imagesApiService.getCatById(CAT_ID)
         call.enqueue(object : retrofit2.Callback<Cat> {
@@ -44,7 +43,6 @@ class CatDetailsFragmentViewModel @Inject constructor(private val imagesApiServi
             }
         })
     }
-
 
     class Factory(viewModel: CatDetailsFragmentViewModel) :
         ViewModelFactory<CatDetailsFragmentViewModel>(viewModel)

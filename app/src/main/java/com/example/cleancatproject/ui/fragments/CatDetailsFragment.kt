@@ -22,10 +22,10 @@ import javax.inject.Inject
 class CatDetailsFragment : Fragment(R.layout.fragment_cat_detail) {
     @Inject
     lateinit var vmFactory: ViewModelProvider.Factory
-    lateinit var mBinding: FragmentCatDetailBinding
-    lateinit var mImageView: ImageView
-    lateinit var mTextView: TextView
-    lateinit var mButton: Button
+    private lateinit var mBinding: FragmentCatDetailBinding
+    private lateinit var mImageView: ImageView
+    private lateinit var mTextView: TextView
+    private lateinit var mButton: Button
     private val mCatDetailsFragmentViewModel: CatDetailsFragmentViewModel by viewModels { vmFactory }
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -55,8 +55,8 @@ class CatDetailsFragment : Fragment(R.layout.fragment_cat_detail) {
 
         mButton.setOnClickListener {
             mCatDetailsFragmentViewModel.onVoteForTheKittyClicked()
-            mButton.isEnabled=false
-            mButton.text="Спасибо за голос"
+            mButton.isEnabled = false
+            mButton.text = getString(R.string.thanks_for_vote)
         }
     }
 }

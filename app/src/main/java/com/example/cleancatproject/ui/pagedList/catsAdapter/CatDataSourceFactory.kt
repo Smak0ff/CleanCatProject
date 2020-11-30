@@ -6,7 +6,6 @@ import com.example.cleancatproject.model.cat.Cat
 import com.example.cleancatproject.network.ImagesApiService
 import javax.inject.Inject
 
-
 class CatDataSourceFactory @Inject constructor(private val apiService: ImagesApiService) :
     DataSource.Factory<Int, Cat>() {
     //Создаём LiveData для полученного с фабрики объекта(данные для списка)

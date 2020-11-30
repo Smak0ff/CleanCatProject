@@ -6,33 +6,35 @@ import com.example.cleancatproject.model.cat.Cat
 import com.example.cleancatproject.network.ImagesApiService
 import com.example.cleancatproject.utils.FIRST_PAGE
 import com.example.cleancatproject.utils.IMG_TYPE
+import com.example.cleancatproject.utils.LIMIT
+import com.example.cleancatproject.utils.ORDER
 import retrofit2.Call
 
-
 class CatDataSource(private val apiService: ImagesApiService) : PageKeyedDataSource<Int, Cat>() {
-    lateinit var call: Call<List<Cat>>
+    private lateinit var call: Call<List<Cat>>
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Cat>
     ) {
         call = when (IMG_TYPE) {
-            TypeEnum.GIF -> apiService.getCatImageGif(FIRST_PAGE)
-            TypeEnum.JPG -> apiService.getCatImageJpg(FIRST_PAGE)
-            TypeEnum.PNG -> apiService.getCatImagePng(FIRST_PAGE)
+            TypeEnum.GIF -> apiService.getCatImage(FIRST_PAGE, LIMIT, ORDER, IMG_TYPE.value)
+            TypeEnum.JPG -> apiService.getCatImage(FIRST_PAGE, LIMIT, ORDER, IMG_TYPE.value)
+            TypeEnum.PNG -> apiService.getCatImage(FIRST_PAGE, LIMIT, ORDER, IMG_TYPE.value)
         }
-
-
-
         call.enqueue(object : retrofit2.Callback<List<Cat>> {
             override fun onResponse(
                 call: Call<List<Cat>>,
                 response: retrofit2.Response<List<Cat>>
             ) {
                 if (response.isSuccessful) {
-                    val apiResponse = response.body()!!
+                    val apiResponse = response.body()
                     apiResponse.let {
-                        callback.onResult(apiResponse, null, FIRST_PAGE + 1)
+                        if (apiResponse != null) {
+                            callback.onResult(apiResponse, null, FIRST_PAGE + 1)
+                        } else {
+                            println(response.errorBody())
+                        }
                     }
                 }
             }
@@ -42,15 +44,13 @@ class CatDataSource(private val apiService: ImagesApiService) : PageKeyedDataSou
             }
         })
     }
-
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Cat>) {
         call = when (IMG_TYPE) {
-            TypeEnum.GIF -> apiService.getCatImageGif(params.key)
-            TypeEnum.JPG -> apiService.getCatImageJpg(params.key)
-            TypeEnum.PNG -> apiService.getCatImagePng(params.key)
+            TypeEnum.GIF -> apiService.getCatImage(params.key, LIMIT, ORDER, IMG_TYPE.value)
+            TypeEnum.JPG -> apiService.getCatImage(params.key, LIMIT, ORDER, IMG_TYPE.value)
+            TypeEnum.PNG -> apiService.getCatImage(params.key, LIMIT, ORDER, IMG_TYPE.value)
         }
-
         call.enqueue(object : retrofit2.Callback<List<Cat>> {
             override fun onResponse(
                 call: Call<List<Cat>>,
@@ -58,13 +58,16 @@ class CatDataSource(private val apiService: ImagesApiService) : PageKeyedDataSou
             ) {
                 if (response.isSuccessful) {
 
-                    val apiResponse = response.body()!!
+                    val apiResponse = response.body()
                     val key = if (params.key > 1) params.key - 1 else 0
                     apiResponse.let {
-                        callback.onResult(apiResponse, key)
+                        if (apiResponse != null) {
+                            callback.onResult(apiResponse, key)
+                        } else {
+                            println(response.errorBody())
+                        }
                     }
                 }
-
             }
 
             override fun onFailure(call: Call<List<Cat>>, t: Throwable) {
@@ -72,28 +75,29 @@ class CatDataSource(private val apiService: ImagesApiService) : PageKeyedDataSou
             }
         })
     }
-
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Cat>) {
         call = when (IMG_TYPE) {
-            TypeEnum.GIF -> apiService.getCatImageGif(params.key)
-            TypeEnum.JPG -> apiService.getCatImageJpg(params.key)
-            TypeEnum.PNG -> apiService.getCatImagePng(params.key)
+            TypeEnum.GIF -> apiService.getCatImage(params.key, LIMIT, ORDER, IMG_TYPE.value)
+            TypeEnum.JPG -> apiService.getCatImage(params.key, LIMIT, ORDER, IMG_TYPE.value)
+            TypeEnum.PNG -> apiService.getCatImage(params.key, LIMIT, ORDER, IMG_TYPE.value)
         }
-
         call.enqueue(object : retrofit2.Callback<List<Cat>> {
             override fun onResponse(
                 call: Call<List<Cat>>,
                 response: retrofit2.Response<List<Cat>>
             ) {
                 if (response.isSuccessful) {
-                    val apiResponse = response.body()!!
+                    val apiResponse = response.body()
                     val key = params.key + 1
                     apiResponse.let {
-                        callback.onResult(apiResponse, key)
+                        if (apiResponse != null) {
+                            callback.onResult(apiResponse, key)
+                        } else {
+                            println(response.errorBody())
+                        }
                     }
                 }
-
             }
 
             override fun onFailure(call: Call<List<Cat>>, t: Throwable) {
@@ -101,5 +105,4 @@ class CatDataSource(private val apiService: ImagesApiService) : PageKeyedDataSou
             }
         })
     }
-
 }

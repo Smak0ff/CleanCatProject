@@ -10,7 +10,6 @@ import dagger.Provides
 
 @Module
 class FavoriteFragmentModule {
-
     @Provides
     @FragmentScope
     fun provideFavoriteDataSourceFactory(apiService: FavoriteApiService): FavoriteDataSourceFactory {
@@ -19,9 +18,15 @@ class FavoriteFragmentModule {
 
     @Provides
     @FragmentScope
-    fun provideFavoriteViewModelFactory(dataSourceFactory: FavoriteDataSourceFactory, favoriteApiService: FavoriteApiService): ViewModelProvider.Factory {
-        return FavoriteFragmentViewModel.Factory(FavoriteFragmentViewModel(dataSourceFactory, favoriteApiService))
+    fun provideFavoriteViewModelFactory(
+        dataSourceFactory: FavoriteDataSourceFactory,
+        favoriteApiService: FavoriteApiService
+    ): ViewModelProvider.Factory {
+        return FavoriteFragmentViewModel.Factory(
+            FavoriteFragmentViewModel(
+                dataSourceFactory,
+                favoriteApiService
+            )
+        )
     }
-
-
 }

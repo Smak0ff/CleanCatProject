@@ -9,10 +9,8 @@ import com.example.cleancatproject.viewmodel.CatsFragmentViewModel
 import dagger.Module
 import dagger.Provides
 
-
 @Module
 class CatsFragmentModule {
-
     @Provides
     @FragmentScope
     fun provideCatDataSourceFactory(imagesApiService: ImagesApiService): CatDataSourceFactory {
@@ -21,8 +19,15 @@ class CatsFragmentModule {
 
     @Provides
     @FragmentScope
-    fun provideCatViewModelFactory(dataSourceFactory: CatDataSourceFactory, favoriteApiService: FavoriteApiService): ViewModelProvider.Factory {
-        return CatsFragmentViewModel.Factory(CatsFragmentViewModel(dataSourceFactory, favoriteApiService))
+    fun provideCatViewModelFactory(
+        dataSourceFactory: CatDataSourceFactory,
+        favoriteApiService: FavoriteApiService
+    ): ViewModelProvider.Factory {
+        return CatsFragmentViewModel.Factory(
+            CatsFragmentViewModel(
+                dataSourceFactory,
+                favoriteApiService
+            )
+        )
     }
-
 }

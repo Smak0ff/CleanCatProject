@@ -1,6 +1,5 @@
 package com.example.cleancatproject.ui.pagedList.uploadAdapter
 
-
 import android.view.*
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -13,7 +12,7 @@ import com.example.cleancatproject.model.upload.Upload
 class UploadAdapter(private val listener: Listener) :
     PagedListAdapter<Upload, UploadAdapter.UploadViewHolder>(UPLOAD_COMPARATOR) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UploadViewHolder {
-        var view = LayoutInflater.from(parent.context).inflate(R.layout.item_upload, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_upload, parent, false)
         return UploadViewHolder(listener, view)
     }
 
@@ -27,11 +26,8 @@ class UploadAdapter(private val listener: Listener) :
     class UploadViewHolder(private val listener: Listener, view: View) :
         RecyclerView.ViewHolder(view), View.OnCreateContextMenuListener,
         MenuItem.OnMenuItemClickListener {
-
-
-        var mBinding = ItemUploadBinding.bind(view)
-        var mImageView = mBinding.imageForRecyclerUploadId
-
+        private var mBinding = ItemUploadBinding.bind(view)
+        private var mImageView = mBinding.imageForRecyclerUploadId
         private var upload: Upload? = null
 
         init {
@@ -55,7 +51,7 @@ class UploadAdapter(private val listener: Listener) :
             v: View?,
             menuInfo: ContextMenu.ContextMenuInfo?
         ) {
-            var menuItem = menu?.add("Удалить")
+            var menuItem = menu?.add(R.string.context_delete)
             menuItem?.setOnMenuItemClickListener(this)
         }
 
@@ -82,5 +78,4 @@ class UploadAdapter(private val listener: Listener) :
 
         fun onLongTap(upload: Upload)
     }
-
 }

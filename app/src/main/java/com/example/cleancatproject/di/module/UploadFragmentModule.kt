@@ -10,7 +10,6 @@ import dagger.Provides
 
 @Module
 class UploadFragmentModule {
-
     @Provides
     @FragmentScope
     fun provideUploadDataSourceFactory(apiService: UploadApiService): UploadDataSourceFactory {
@@ -19,9 +18,15 @@ class UploadFragmentModule {
 
     @Provides
     @FragmentScope
-    fun provideUploadViewModelFactory(dataSourceFactory: UploadDataSourceFactory, uploadApiService: UploadApiService): ViewModelProvider.Factory {
-        return UploadFragmentViewModel.Factory(UploadFragmentViewModel(dataSourceFactory, uploadApiService))
+    fun provideUploadViewModelFactory(
+        dataSourceFactory: UploadDataSourceFactory,
+        uploadApiService: UploadApiService
+    ): ViewModelProvider.Factory {
+        return UploadFragmentViewModel.Factory(
+            UploadFragmentViewModel(
+                dataSourceFactory,
+                uploadApiService
+            )
+        )
     }
-
-
 }

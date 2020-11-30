@@ -6,13 +6,15 @@
     android:layout_marginTop="@dimen/double_vertical_margin"
     android:layout_marginBottom="@dimen/double_vertical_margin"
     android:orientation="vertical">
+
     <ImageView
+        android:id="@+id/imageForRecyclerId"
         android:layout_width="165dp"
-        android:layout_height="165dp"
-        android:id="@+id/imageForRecyclerId"/>
+        android:layout_height="165dp" />
+
     <Button
-        android:text="@string/add_to_favorite_text"
         android:id="@+id/addToFavoriteBtnId"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="@string/add_to_favorite_text" />
 </LinearLayout>

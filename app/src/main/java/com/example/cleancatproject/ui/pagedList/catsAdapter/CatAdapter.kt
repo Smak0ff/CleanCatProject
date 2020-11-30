@@ -30,13 +30,10 @@ class CatAdapter(private val listener: Listener) :
     //Логика по UI - во ViewHolder
     class CatViewHolder(private val listener: Listener, view: View) :
         RecyclerView.ViewHolder(view) {
-
-        var mBinding = ItemCatBinding.bind(view)
-        var mImageView = mBinding.imageForRecyclerId
-        var mButton = mBinding.addToFavoriteBtnId
-
+        private var mBinding = ItemCatBinding.bind(view)
+        private var mImageView = mBinding.imageForRecyclerId
+        private var mButton = mBinding.addToFavoriteBtnId
         private var cat: Cat? = null
-
         init {
             //сетим листенеры
             mImageView.setOnClickListener {
@@ -44,29 +41,24 @@ class CatAdapter(private val listener: Listener) :
                     listener.onImageClicked(it)
                 }
             }
-
             mButton.setOnClickListener {
                 cat?.let {
                     listener.onAddToFavoritesClicked(it)
                 }
             }
         }
-
         fun bind(cat: Cat) {
             this.cat = cat
-
             Glide.with(mImageView.context)
                 .load(cat.url)
                 .into(mImageView)
         }
     }
 
-
     companion object {
         private val CAT_COMPARATOR = object : DiffUtil.ItemCallback<Cat>() {
             override fun areItemsTheSame(oldItem: Cat, newItem: Cat): Boolean =
                 oldItem.id == newItem.id
-
 
             override fun areContentsTheSame(oldItem: Cat, newItem: Cat): Boolean =
                 newItem == oldItem
@@ -74,15 +66,11 @@ class CatAdapter(private val listener: Listener) :
     }
 
     interface Listener {
-
         //взаимодействие между айтемами списка и фрагментом через этот интерфейс
         fun onImageClicked(cat: Cat) {
-
         }
 
         fun onAddToFavoritesClicked(cat: Cat) {
-
         }
-
     }
 }

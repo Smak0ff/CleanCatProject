@@ -20,19 +20,14 @@ import javax.inject.Singleton
 )
 
 interface AppComponent : AndroidInjector<App> {
-
     override fun inject(instance: App)
-
     @Component.Builder
     interface Builder {
-
         @BindsInstance
         fun bindApp(app: Application): Builder
 
         fun bindAppModules(appModule: AppModule): Builder
 
         fun build(): AppComponent
-
     }
-
 }

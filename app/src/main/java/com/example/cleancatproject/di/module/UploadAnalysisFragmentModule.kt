@@ -12,6 +12,10 @@ class UploadAnalysisFragmentModule {
     @Provides
     @FragmentScope
     fun provideUploadAnalysisViewModelFactory(uploadApiService: UploadApiService): ViewModelProvider.Factory {
-        return UploadAnalysisFragmentViewModel.Factory(UploadAnalysisFragmentViewModel(uploadApiService))
+        return UploadAnalysisFragmentViewModel.Factory(
+            UploadAnalysisFragmentViewModel(
+                uploadApiService
+            )
+        )
     }
 }

@@ -6,7 +6,6 @@ import javax.inject.Singleton
 
 @Singleton
 open class ViewModelFactory<VM : Any>(private val viewModel: VM) : ViewModelProvider.Factory {
-
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(viewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
@@ -14,5 +13,4 @@ open class ViewModelFactory<VM : Any>(private val viewModel: VM) : ViewModelProv
         }
         throw IllegalStateException("Wrong viewModel class name")
     }
-
 }

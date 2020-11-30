@@ -53,10 +53,8 @@ class FavoriteFragmentViewModel @Inject constructor(
                 println(t.message)
             }
         })
-
     }
 
     class Factory(viewModel: FavoriteFragmentViewModel) :
         ViewModelFactory<FavoriteFragmentViewModel>(viewModel)
-
 }

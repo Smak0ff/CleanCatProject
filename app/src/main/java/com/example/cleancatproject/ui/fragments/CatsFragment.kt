@@ -26,7 +26,6 @@ import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
 class CatsFragment : Fragment(R.layout.fragment_cats), CatAdapter.Listener {
-
     //инжектим сюда фактори (которая провайдится в CatsFragmentModule)
     //больше ничего во фрагмент инжектить не надо. Всё взамодействие - через вьюмодель.
     //во вьюмодели уже можно инжектить apiService, dataSource и что угодно.
@@ -38,13 +37,12 @@ class CatsFragment : Fragment(R.layout.fragment_cats), CatAdapter.Listener {
     @Inject
     lateinit var vmFactory: ViewModelProvider.Factory
 
-    lateinit var mBinding: FragmentCatsBinding
-    lateinit var mGifBtn: Button
-    lateinit var mJpgBtn: Button
-    lateinit var mPngBtn: Button
-    lateinit var mRecyclerView: RecyclerView
-    lateinit var adapter: CatAdapter
-
+    private lateinit var mBinding: FragmentCatsBinding
+    private lateinit var mGifBtn: Button
+    private lateinit var mJpgBtn: Button
+    private lateinit var mPngBtn: Button
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var adapter: CatAdapter
     private val mCatsFragmentViewModel: CatsFragmentViewModel by viewModels { vmFactory }
 
     override fun onAttach(context: Context) {
@@ -98,6 +96,6 @@ class CatsFragment : Fragment(R.layout.fragment_cats), CatAdapter.Listener {
     override fun onAddToFavoritesClicked(cat: Cat) {
         //прокидываем обработку клика во вьюмодель, чтобы не использовать apiService из фрагмента
         mCatsFragmentViewModel.onAddToFavoritesClicked(cat)
-        Toast.makeText(requireContext(), "Добавлено", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), R.string.added, Toast.LENGTH_SHORT).show()
     }
 }
